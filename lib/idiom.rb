@@ -58,7 +58,7 @@ module Idiom #:nodoc:
         @destination = options[:destination]
         @use_dirs = options[:use_dirs]
         Timer.new.time do
-          @source.to_a.each do |path|
+          Dir[@source].each do |path|
             $stdout.puts "Processing #{path}"
             if path =~ /\.yml$/i
               Idiom::Yaml.new({:source => path}.merge(options)).generate
