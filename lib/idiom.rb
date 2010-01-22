@@ -62,10 +62,10 @@ module Idiom #:nodoc:
           Dir[@source].each do |path|
             $stdout.puts "Processing #{path}"
             if path =~ /\.yml$/i
-              Idiom::Yaml.new({:source => path}.merge(options)).generate
+              Idiom::Yaml.new(options.merge({:source => path})).generate
             end
             if path =~ /\.pres$/i
-              Idiom::Yrb.new({:source => path}.merge(options)).generate
+              Idiom::Yrb.new(options.merge({:source => path})).generate
             end
           end
         end
