@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+idiom_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(idiom_dir) unless $LOAD_PATH.include?(idiom_dir)
+
+require 'idiom'
+
+Idiom::Base.translate(:source => ARGV[0])

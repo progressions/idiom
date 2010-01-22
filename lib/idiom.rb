@@ -77,9 +77,11 @@ module Idiom #:nodoc:
       @overwrite = options[:overwrite]
       @languages = options[:languages]
       
+      @base_source = @source.gsub(/_en-US/, "")
+      
       # base directory of the source file
       #
-      source_dir = File.dirname(@source)
+      @source_dir = File.dirname(@source)
       
       # if they specify the :use_dirs option, use that
       # if not, detect whether the source path uses directories for each language
@@ -87,13 +89,13 @@ module Idiom #:nodoc:
       if options.has_key?(:use_dirs)
         @use_dirs = options[:use_dirs]
       else
-        @use_dirs = source_dir =~ /\/en-US$/
+        @use_dirs = @source_dir =~ /\/en-US$/
       end
       
       if @use_dirs
-        source_dir = File.dirname(@source).gsub(/\/en-US$/, "")
+        @source_dir = File.dirname(@source).gsub(/\/en-US$/, "")
       end
-      @destination = options[:destination] || source_dir
+      @destination = options[:destination] || @source_dir
     end
     
     def generate
@@ -109,7 +111,7 @@ module Idiom #:nodoc:
     end
     
     def destination_path(lang)
-      output_path = File.basename(source).split(".").first
+      output_path = File.basename(@base_source).split(".").first
       if use_directories?
         "#{destination}/#{lang}/#{output_path}_#{lang}.#{extension}"
       else
@@ -188,7 +190,24 @@ module Idiom #:nodoc:
     end
     
     def all_keys(lang)
-      @all_keys ||= parse(destination_path(lang))
+      unless @all_keys
+        @all_keys = {}
+        Dir[destination_file_or_directory(lang)].each do |path|
+          if File.exists?(path)
+            keys = parse(path)
+            @all_keys = @all_keys.merge(keys)
+          end
+        end
+      end
+      @all_keys
+    end
+    
+    def destination_file_or_directory(lang)
+      if @use_dir
+        "#{destination_path(lang)}/*.#{extension}"
+      else
+        destination_path(lang)
+      end
     end
     
     def clear_all_keys
