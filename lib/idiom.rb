@@ -64,7 +64,7 @@ module Idiom #:nodoc:
               Idiom::Yaml.new({:source => path}.merge(options)).generate
             end
             if path =~ /\.pres$/i
-              Idiom::Yrb.new({:source => path}.merge(options)).generate
+              Idiom::Yrb.new({:source => path, :languages => ["de-DE"]}.merge(options)).generate
             end
           end
         end
@@ -180,9 +180,9 @@ module Idiom #:nodoc:
       
       @lines.each do |line|
         new_line = yield line
-        output << new_line unless line.blank?
+        output << new_line
       end
-      output.flatten.join("\n")
+      output.compact.join("\n")
     end
     
     def parse(p)
@@ -196,6 +196,7 @@ module Idiom #:nodoc:
           if File.exists?(path)
             keys = parse(path)
             @all_keys = @all_keys.merge(keys)
+            $stdout.puts @all_keys.inspect
           end
         end
       end
@@ -203,8 +204,9 @@ module Idiom #:nodoc:
     end
     
     def destination_file_or_directory(lang)
-      if @use_dir
-        "#{destination_path(lang)}/*.#{extension}"
+      if use_directories?
+        dir = File.dirname(destination_path(lang))
+        "#{dir}/*.#{extension}"
       else
         destination_path(lang)
       end
