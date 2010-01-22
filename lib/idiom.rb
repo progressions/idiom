@@ -196,7 +196,6 @@ module Idiom #:nodoc:
           if File.exists?(path)
             keys = parse(path)
             @all_keys = @all_keys.merge(keys)
-            $stdout.puts @all_keys.inspect
           end
         end
       end
