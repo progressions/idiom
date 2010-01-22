@@ -20,6 +20,6 @@ pkg
 
 ## PROJECT::SPECIFIC
 
-bin/*
+vendor/bin/*
 vendor/gems/*
 !vendor/gems/cache/
