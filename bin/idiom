@@ -5,4 +5,6 @@ $LOAD_PATH.unshift(idiom_dir) unless $LOAD_PATH.include?(idiom_dir)
 
 require 'idiom'
 
-Idiom::Base.translate(:source => ARGV[0])
+source = ARGV[0] || "./**/*_en-US.*"
+
+Idiom::Base.translate(:source => source)
