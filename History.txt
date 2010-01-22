@@ -1,3 +1,7 @@
+== 0.0.5 2010-01-22
+  * major enhancements
+    * command-line file doesn't require parameters
+    
 == 0.0.4 2010-01-22
   * minor enhancements
     * use wildcards for Idiom::Base.translate
