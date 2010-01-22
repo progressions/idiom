@@ -1,9 +1,9 @@
-== in Git
+== 0.0.4 2010-01-22
   * minor enhancements
     * use wildcards for Idiom::Base.translate
   * bug fixes
     * smarter understanding of what is a directory
 
-== 0.0.2 (1/22/2010)
+== 0.0.2 2010-01-22
   * major enhancements
     * don't write duplicate keys
