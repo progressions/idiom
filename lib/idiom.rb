@@ -64,7 +64,7 @@ module Idiom #:nodoc:
               Idiom::Yaml.new({:source => path}.merge(options)).generate
             end
             if path =~ /\.pres$/i
-              Idiom::Yrb.new({:source => path, :languages => ["de-DE"]}.merge(options)).generate
+              Idiom::Yrb.new({:source => path}.merge(options)).generate
             end
           end
         end
