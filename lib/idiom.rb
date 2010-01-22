@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'active_support'
 require 'rtranslate'
 require 'timer'
 require 'yrb'
@@ -33,7 +34,7 @@ module Idiom #:nodoc:
       "id-ID" => "id",
       "pt-BR" => "PORTUGUESE",
       "zh-Hant-HK" => "zh-CN",
-    }    
+    }
 
     # Original filename to translate.
     #
@@ -73,7 +74,7 @@ module Idiom #:nodoc:
     end
     
     def initialize(options={})
-      @source = options[:source]
+      @source = File.expand_path(options[:source])
       @overwrite = options[:overwrite]
       @languages = options[:languages]
       

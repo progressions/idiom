@@ -2,11 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Idiom" do
   before(:each) do
-    stub_timer
-    stub_yrb
-    stub_yaml
-    stub_screen_io
-    stub_file_io
+    stub_io
   end
   
   describe "base" do
@@ -45,14 +41,14 @@ SECOND=second key
     
     it "should create the destination path if it does not exist" do
       Idiom::Yrb::LOCALES.each do |lang, code|
-        FileUtils.should_receive(:mkdir_p).with("./translations") unless lang == "en-US"
+        FileUtils.should_receive(:mkdir_p).with(/\/translations/) unless lang == "en-US"
       end
       Idiom::Yrb.new(:source => @source).generate
     end
     
     it "should write to the destination path" do
       Idiom::Yrb::LOCALES.each do |lang, code|
-        File.should_receive(:open).with("./translations/path_#{lang}.pres", "a") unless lang == "en-US"
+        File.should_receive(:open).with(/\/translations\/path_#{lang}.pres/, "a") unless lang == "en-US"
       end
       Idiom::Yrb.new(:source => @source).generate
     end
@@ -64,16 +60,23 @@ SECOND=second key
     
       it "should write to directories" do
         Idiom::Yrb::LOCALES.each do |lang, code|
-          File.should_receive(:open).with("./translations/#{lang}/path_#{lang}.pres", "a") unless lang == "en-US"
+          File.should_receive(:open).with(/\/translations\/#{lang}\/path_#{lang}.pres/, "a") unless lang == "en-US"
         end
         Idiom::Yrb.new(:source => @source, :use_dirs => true).generate
       end
     
       it "should create the destination path with directories if it does not exist" do
         Idiom::Yrb::LOCALES.each do |lang, code|
-          FileUtils.should_receive(:mkdir_p).with("./translations/#{lang}") unless lang == "en-US"
+          FileUtils.should_receive(:mkdir_p).with(/\/translations\/#{lang}/) unless lang == "en-US"
         end
         Idiom::Yrb.new(:source => @source, :use_dirs => true).generate
+      end
+      
+      it "should recognize a directory" do
+        Idiom::Yrb::LOCALES.each do |lang, code|
+          File.should_receive(:open).with(/\/#{lang}\/path_#{lang}.pres/, "a") unless lang == "en-US"
+        end
+        Idiom::Yrb.new(:source => "en-US/path.pres", :use_dirs => true).generate
       end
     end
     
@@ -92,9 +95,9 @@ SECOND=second key
         @languages = ["de-DE", "zh-Hant-HK"]
         Idiom::Yrb::LOCALES.each do |lang, code|
           if @languages.include?(lang)
-            File.should_receive(:open).with("./translations/path_#{lang}.pres", "a")
+            File.should_receive(:open).with(/\/translations\/path_#{lang}.pres/, "a")
           else
-            File.should_not_receive(:open).with("./translations/path_#{lang}.pres", "a")
+            File.should_not_receive(:open).with(/\/translations\/path_#{lang}.pres/, "a")
           end
         end
         Idiom::Yrb.new(:source => @source, :languages => @languages).generate
@@ -116,14 +119,14 @@ second: second key
     
     it "should create the destination path if it does not exist" do
       Idiom::Yaml::LOCALES.each do |lang, code|
-        FileUtils.should_receive(:mkdir_p).with("./translations") unless lang == "en-US"
+        FileUtils.should_receive(:mkdir_p).with(/\/translations/) unless lang == "en-US"
       end
       Idiom::Yaml.new(:source => @source).generate
     end
     
     it "should write to the destination path" do
       Idiom::Yaml::LOCALES.each do |lang, code|
-        File.should_receive(:open).with("./translations/path_#{lang}.yml", "a") unless lang == "en-US"
+        File.should_receive(:open).with(/\/translations\/path_#{lang}.yml/, "a") unless lang == "en-US"
       end
       Idiom::Yaml.new(:source => @source).generate
     end
@@ -135,14 +138,14 @@ second: second key
           
       it "should write to directories" do
         Idiom::Yaml::LOCALES.each do |lang, code|
-          File.should_receive(:open).with("./translations/#{lang}/path_#{lang}.yml", "a") unless lang == "en-US"
+          File.should_receive(:open).with(/\/translations\/#{lang}\/path_#{lang}.yml/, "a") unless lang == "en-US"
         end
         Idiom::Yaml.new(:source => @source, :use_dirs => true).generate
       end
     
       it "should create the destination path with directories if it does not exist" do
         Idiom::Yrb::LOCALES.each do |lang, code|
-          FileUtils.should_receive(:mkdir_p).with("./translations/#{lang}") unless lang == "en-US"
+          FileUtils.should_receive(:mkdir_p).with(/\/translations\/#{lang}/) unless lang == "en-US"
         end
         Idiom::Yrb.new(:source => @source, :use_dirs => true).generate
       end
@@ -163,9 +166,9 @@ second: second key
         @languages = ["de-DE", "zh-Hant-HK"]
         Idiom::Yaml::LOCALES.each do |lang, code|
           if @languages.include?(lang)
-            File.should_receive(:open).with("./translations/path_#{lang}.yml", "a")
+            File.should_receive(:open).with(/\/translations\/path_#{lang}.yml/, "a")
           else
-            File.should_not_receive(:open).with("./translations/path_#{lang}.yml", "a")
+            File.should_not_receive(:open).with(/\/translations\/path_#{lang}.yml/, "a")
           end
         end
         Idiom::Yaml.new(:source => @source, :languages => @languages).generate

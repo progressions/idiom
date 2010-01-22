@@ -1,6 +1,8 @@
 == in Git
   * minor enhancements
     * use wildcards for Idiom::Base.translate
+  * bug fixes
+    * smarter understanding of what is a directory
 
 == 0.0.2 (1/22/2010)
   * major enhancements
