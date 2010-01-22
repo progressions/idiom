@@ -1,0 +1,3 @@
+== 0.0.2 (1/22/2010)
+  * major enhancements
+    * don't write duplicate keys

@@ -1,6 +1,9 @@
 = idiom
 
-Description goes here.
+Translate the internationalized content of your application through Google Translate.
+
+Takes a filename in either Yaml or Yahoo Resource Bundle format and translates the results with Google Translate, writing the content where it is usable in your app.
+
 
 == Note on Patches/Pull Requests
  
@@ -14,4 +17,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Jeff Coleman. See LICENSE for details.
+Copyright (c) 2010 Capital Thought. See LICENSE for details.
