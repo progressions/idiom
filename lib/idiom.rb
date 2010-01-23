@@ -59,7 +59,15 @@ module Idiom #:nodoc:
         @destination = options[:destination]
         @use_dirs = options[:use_dirs]
         Timer.new.time do
-          Dir[@source].each do |path|
+          if @source =~ /\.(yml|pres)$/
+            source_files = Dir[@source]
+          else
+            dir = File.expand_path(@source)
+            source_files = Dir["#{dir}/**/*_en-US.pres"] + Dir["#{dir}/**/*_en-US.yml"]
+            source_files.flatten!
+          end
+          
+          source_files.each do |path|
             $stdout.puts "Processing #{path}"
             if path =~ /\.yml$/i
               Idiom::Yaml.new(options.merge({:source => path})).generate

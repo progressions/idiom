@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "idiom"
-    gem.summary = %Q{Translate strings in Google Translate}
+    gem.summary = %Q{Translate all your application's international keys in Google Translate}
     gem.description = %Q{Takes a set of keys in Yaml format and translates them through Google Translate.}
     gem.email = "progressions@gmail.com"
     gem.homepage = "http://github.com/progressions/idiom"
