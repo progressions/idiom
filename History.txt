@@ -1,3 +1,8 @@
+== 0.0.6 (in Git)
+  * minor enhancements
+    * some internal refactoring
+    * added destination option to command-line interface
+
 == 0.0.5.1 2010-01-22
   * bug fixes
     * correct command-line file
