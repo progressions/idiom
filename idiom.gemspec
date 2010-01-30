@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{idiom}
-  s.version = "0.0.5.1"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Coleman"]
-  s.date = %q{2010-01-22}
+  s.date = %q{2010-01-30}
   s.default_executable = %q{idiom}
   s.description = %q{Takes a set of keys in Yaml format and translates them through Google Translate.}
   s.email = %q{progressions@gmail.com}
@@ -30,6 +30,9 @@ Gem::Specification.new do |s|
      "bin/idiom",
      "idiom.gemspec",
      "lib/idiom.rb",
+     "lib/idiom/base.rb",
+     "lib/idiom/yaml.rb",
+     "lib/idiom/yrb.rb",
      "spec/idiom_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
@@ -39,7 +42,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Translate strings in Google Translate}
+  s.summary = %q{Translate all your application's international keys in Google Translate}
   s.test_files = [
     "spec/idiom_spec.rb",
      "spec/spec_helper.rb",
