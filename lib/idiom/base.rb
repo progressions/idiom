@@ -148,7 +148,7 @@ module Idiom #:nodoc:
       else
         dir = File.expand_path(@source)
         source_files = Dir["#{dir}/**/*_en-US.pres"] + Dir["#{dir}/**/*_en-US.yml"]
-        source_files.flatten!
+        source_files.flatten
       end        
     end
     
