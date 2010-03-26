@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/progressions/idiom}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Translate all your application's international keys in Google Translate}
   s.test_files = [
     "spec/idiom_spec.rb",
