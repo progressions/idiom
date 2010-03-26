@@ -58,7 +58,7 @@ module Idiom #:nodoc:
       "es-ES" => "es",
       "id-ID" => "id",
       "pt-BR" => "PORTUGUESE",
-      "zh-Hant-HK" => "zh-CN",
+      "zh-Hant-HK" => "zh-TW",
     }
     
     # locales
