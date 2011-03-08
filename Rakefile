@@ -13,6 +13,9 @@ begin
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_runtime_dependency "activesupport", ">= 2.2.2"
     gem.add_runtime_dependency "sishen-rtranslate", ">= 1.2.9"
+    gem.add_runtime_dependency "timer"
+    gem.add_runtime_dependency "natural_time"
+    gem.add_runtime_dependency "g"
     gem.add_runtime_dependency "yrb", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
