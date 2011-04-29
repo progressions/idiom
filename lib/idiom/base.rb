@@ -35,34 +35,13 @@ module Idiom #:nodoc:
   end
   
   module Locales #:nodoc:
-    # Mapping of the way I18n country codes with the Google Translate codes.
+    # Mapping of the I18n country codes with the Google Translate codes.
     #
     # The key is the I18n representation, and the value is the code Google Translate would expect.
     #
-    LOCALES = {
-      "de-DE" => "de",
-      "en-MY" => "en",
-      "en-SG" => "en",
-      "es-AR" => "es",
-      "es-MX" => "es",
-      "es-US" => "es",
-      "it-IT" => "it",
-      "vi-VN" => "vi",
-      "zh-Hant-TW" => "zh-TW",
-      "en-AA" => "en",
-      "en-NZ" => "en",
-      "en-US" => "en",
-      "fr-FR" => "fr",
-      "ko-KR" => "ko",
-      "zh-Hans-CN" => "zh-CN",
-      "en-AU" => "en",
-      "en-PH" => "en",
-      "es-ES" => "es",
-      "id-ID" => "id",
-      "pt-BR" => "PORTUGUESE",
-      "zh-Hant-HK" => "zh-TW",
-    }
     
+    LOCALES = YAML.load_file("./config/locales.yml")
+        
     # locales
     
     def non_us_locales
@@ -312,18 +291,29 @@ module Idiom #:nodoc:
     
     def translate_new_key(line, lang)
       k, v = key_and_value_from_line(line)
+      
       if @overwrite || key_is_new?(k, lang)
-        format(k, translate(v, lang))
+        translation = translate(v, lang)
+      
+        if translation == "Error: invalid result data"
+          return nil
+        end
+        
+        format(k, translation)
       else
         nil
       end        
     end
     
     def translate(value, lang)
+      $stdout.puts("Translating #{value} into #{lang}...")
       code = LOCALES[lang]
       value = pre_process(value, lang)
       translation = Translate.t(value, "ENGLISH", code)
-      post_process(translation, lang)
+      value = post_process(translation, lang)
+      $stdout.puts("value: #{value}")
+      sleep(5)
+      value
     end
     
     def format(key, value)
