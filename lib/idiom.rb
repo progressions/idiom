@@ -8,6 +8,7 @@ require 'fileutils'
 require 'rtranslate'
 require 'timer'
 require 'yrb'
+require 'yaml'
 
 require 'idiom/base'
 require 'idiom/yrb'
