@@ -280,6 +280,8 @@ module Idiom #:nodoc:
       line = line.split("\n").first
       if comment?(line) || line.blank?
         nil
+      elsif line == "en:"
+        "#{lang}:"
       else
         translate_new_key(line, lang)
       end
