@@ -10,6 +10,7 @@ require 'timer'
 require 'yrb'
 require 'yaml'
 
+require 'idiom/microsoft_translator'
 require 'idiom/base'
 require 'idiom/yrb'
 require 'idiom/yaml'

@@ -41,6 +41,7 @@ module Idiom #:nodoc:
     #
     
     LOCALES = YAML.load_file("./config/locales.yml")
+    CONFIG = YAML.load_file("./config/idiom.yml")
         
     # locales
     
@@ -311,11 +312,21 @@ module Idiom #:nodoc:
       $stdout.puts("Translating #{value} into #{lang}...")
       code = LOCALES[lang]
       value = pre_process(value, lang)
-      translation = Translate.t(value, "ENGLISH", code)
+      
+      translation = do_translate(value, code)
+      
       value = post_process(translation, lang)
       $stdout.puts("value: #{value}")
-      sleep(5)
       value
+    end
+    
+    def do_translate(value, code)
+      if CONFIG["library"].to_s.downcase == "google"
+        Translate.t(value, "ENGLISH", code)
+        sleep(5)
+      else
+        MicrosoftTranslator.t(value, code)
+      end
     end
     
     def format(key, value)
