@@ -5,6 +5,10 @@ module Idiom #:nodoc:
   #   Translator::Yaml.new().copy
   #
   class Yaml < Base
+    def destination_path(lang)
+      source
+    end
+    
     def extension
       "yml"
     end

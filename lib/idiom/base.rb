@@ -74,40 +74,18 @@ module Idiom #:nodoc:
     end
     
     def post_process(value, lang)
-       if lang =~ /zh/
-        value.gsub!("<strong>", "")
-        value.gsub!("</strong>", "")
-      end
-
-      value.gsub!(/^#{194.chr}#{160.chr}/, "")
-
-      value.gsub!(" ]", "]")
-      value.gsub!("«", "\"")
-      value.gsub!("»", "\"")
-      value.gsub!(/\"\.$/, ".\"")
-      value.gsub!(/\\ \"/, "\\\"")
-      value.gsub!(/<\/ /, "<\/")
-      value.gsub!(/(“|”)/, "\"")
-      value.gsub!("<strong> ", "<strong>")
-      value.gsub!(" </strong>", "</strong>")
-      value.gsub!("&quot;", "\"")
-      value.gsub!("&#39;", "\"")
-      value.gsub!("&gt; ", ">")
+      value.gsub!('"。', '。"')
+      value.gsub!(/^[''"「«]+/, "")
+      value.gsub!(/[''"」»]+$/, "")
+      value.gsub!('"', "'")
+      value.gsub!("«", "")
+      value.gsub!("»", "")
       
-      value.gsub!("\"", "'")
-      value.gsub!(" \"O", " \\\"O")
-
-      while value =~ /\[(\d)\]/
-        index = $1.to_i
-        value.sub!(/\[#{index}\]/, "{#{index}}")
-      end
-  
-      value.gsub!(/\((0)\)/, "{0}")
-      value.gsub!(/\((1)\)/, "{1}")
-      value.gsub!(/\((2)\)/, "{2}")
-      value.gsub!("（0）", "{0}")
-
-      value.strip
+      value.strip!
+      value.capitalize!
+      value = "\"#{value}\"" if value.present?
+      
+      value
     end    
   end
   
