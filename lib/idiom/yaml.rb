@@ -5,8 +5,12 @@ module Idiom #:nodoc:
   #   Translator::Yaml.new().copy
   #
   class Yaml < Base
-    def destination_path(lang)
-      source
+    def destination_path(lang=nil)
+      "#{source}.tmp"
+    end
+    
+    def after_translation
+      system "cat #{destination_path} >> #{source} && rm #{destination_path}"
     end
     
     def extension
@@ -14,7 +18,7 @@ module Idiom #:nodoc:
     end
     
     def parse(path)
-      YAML.load_file(path)
+      YAML.load_file(path) || {}
     end
     
     def format(key, value)

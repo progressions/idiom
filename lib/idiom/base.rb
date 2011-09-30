@@ -193,6 +193,7 @@ module Idiom #:nodoc:
     end
     
     def generate
+      before_translation
       non_us_locales.each do |lang|
         code = LOCALES[lang]
         destination = ensure_destination_path_exists(lang)
@@ -202,6 +203,13 @@ module Idiom #:nodoc:
         write_content(destination, new_content)
         clear_all_keys
       end
+      after_translation
+    end
+    
+    def before_translation
+    end
+    
+    def after_translation
     end
     
     def new_translation_message
@@ -269,7 +277,7 @@ module Idiom #:nodoc:
       line = line.split("\n").first
       if comment?(line) || line.blank?
         nil
-      elsif line == "en:"
+      elsif line.strip == "en:"
         "#{lang}:"
       else
         translate_new_key(line, lang)
