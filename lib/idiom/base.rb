@@ -98,8 +98,6 @@ module Idiom #:nodoc:
       value
     end    
   end
-
-  end
   
   module ClassMethods #:nodoc:
     def translate(options={})
