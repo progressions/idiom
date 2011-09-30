@@ -70,6 +70,9 @@ module Idiom #:nodoc:
         value = value.capitalize
       end
       
+      value.gsub!("{{", "{{_")
+      value.gsub!("}}", "_}}")
+      
       value
     end
     
@@ -80,6 +83,13 @@ module Idiom #:nodoc:
       value.gsub!('"', "'")
       value.gsub!("«", "")
       value.gsub!("»", "")
+      value.gsub!("&lt;", "<")
+      value.gsub!("&gt;", ">")
+      value.gsub!("{ ", "{")
+      value.gsub!(" }", "}")
+      value.gsub!("{{_", "{{")
+      value.gsub!("_}}", "}}")
+      value.gsub!(/\\$/, "")
       
       value.strip!
       value.capitalize!
@@ -87,6 +97,8 @@ module Idiom #:nodoc:
       
       value
     end    
+  end
+
   end
   
   module ClassMethods #:nodoc:
