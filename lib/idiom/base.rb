@@ -46,9 +46,10 @@ module Idiom #:nodoc:
     # locales
     
     def non_us_locales
-      @non_us_locales ||= locales.select do |lang|
-        lang != "en-US"
-      end
+      # @non_us_locales ||= locales.select do |lang|
+      #   lang != "en-US"
+      # end
+      locales
     end
 
     def locales
