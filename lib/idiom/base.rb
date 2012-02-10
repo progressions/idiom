@@ -59,6 +59,27 @@ module Idiom #:nodoc:
   
   module Processing #:nodoc:
     def pre_process(value, lang)
+      # extract %{substitution_var} => @substitution_vars = ['substitution_var']
+      #
+      # This prevents the translator from seeing the substitution_var, in case it
+      # tries to e.g. downcase it or whatever.
+      @substitution_vars = []
+      while value =~ /%\{([^\}]*)\}/
+        value.sub! /%\{([^\}]*)\}/, "|#{@substitution_vars.count}|"
+        @substitution_vars << $1
+      end
+
+      # extract '''pass through''' / ===pass through===  => @pass_through_vars = ['pass through']
+      #
+      # This allows string to be passed through without being translated
+      # differs from @substitution_vars in that the underscore markup
+      # will be stripped from the final result
+      @pass_through_vars = []
+      while value =~ /(?:(?:===)|(?:'''))(.*?)(?:(?:===)|(?:'''))/
+        value.sub! /(?:(?:===)|(?:'''))(.*?)(?:(?:===)|(?:'''))/, "__#{@pass_through_vars.count}__"
+        @pass_through_vars  << $1
+      end
+ 
       vars = []
       index = 0
       while value =~ /(\{\d+\})/
@@ -73,10 +94,10 @@ module Idiom #:nodoc:
       
       value.gsub!("{{", "{{_")
       value.gsub!("}}", "_}}")
-      
+
       value
     end
-    
+
     def post_process(value, lang)
       value.gsub!('"。', '。"')
       value.gsub!(/^[''"「«]+/, "")
@@ -91,15 +112,25 @@ module Idiom #:nodoc:
       value.gsub!("{{_", "{{")
       value.gsub!("_}}", "}}")
       value.gsub!(/\\$/, "")
-      
+
       value.strip!
       value.capitalize!
       value = "\"#{value}\"" if value.present?
-      
+
+      # Replace substitution vars
+      while value =~ /\|([^\|]+)\|/ 
+        value.sub! /\|([^\|]+)\|/, "%{#{@substitution_vars[$1.to_i]}}" 
+      end
+
+      # Replace pass-through content
+      while value =~ /__(.*?)__/
+        value.sub! /__(.*?)__/, @pass_through_vars[$1.to_i]
+      end
+
       value
     end    
   end
-  
+
   module ClassMethods #:nodoc:
     def translate(options={})
       options.stringify_keys!
@@ -165,12 +196,22 @@ module Idiom #:nodoc:
     #
     attr_accessor :languages
         
+    # Cached array of subsitution variables
+    #
+    attr_accessor :substitution_vars
+
+    # Cached array of pass-through content
+    #
+    attr_accessor :pass_through_vars
+
     def initialize(options={})
       options.stringify_keys!
       
       @source = File.expand_path(options["source"])
       @overwrite = options["overwrite"]
       @languages = options["languages"]
+      @substitution_vars = []
+      @pass_through_vars = []
       
       @base_source = @source.gsub(/_en-US/, "")
       
@@ -195,9 +236,11 @@ module Idiom #:nodoc:
     
     def generate
       before_translation
+      # RM NOTE: Async concurrent by language?
       non_us_locales.each do |lang|
         code = LOCALES[lang]
         destination = ensure_destination_path_exists(lang)
+        # RM NOTE: this breaks on multi-line strings
         new_content = each_line do |line|
           copy_and_translate_line(line, lang)
         end
@@ -306,14 +349,14 @@ module Idiom #:nodoc:
     end
     
     def translate(value, lang)
+      return '' if value == ''
       $stdout.puts("Translating #{value} into #{lang}...")
       code = LOCALES[lang]
       value = pre_process(value, lang)
-      
+
       translation = do_translate(value, code)
-      
+
       value = post_process(translation, lang)
-      $stdout.puts("value: #{value}")
       value
     end
     

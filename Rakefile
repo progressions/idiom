@@ -24,6 +24,7 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
+=begin
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
@@ -37,6 +38,7 @@ Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.rcov_opts = ['--exclude', '.gem,Library,spec', '--sort', 'coverage']
   spec.rcov = true
 end
+=end
 
 task :bundle do
   require 'vendor/gems/environment'
@@ -47,7 +49,7 @@ task :spec => [:bundle, :check_dependencies]
 
 task :default => :spec
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
