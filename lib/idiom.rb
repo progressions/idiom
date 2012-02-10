@@ -9,7 +9,6 @@ require 'rtranslate'
 require 'timer'
 require 'yrb'
 require 'yaml'
-require 'ya2yaml'
 
 require 'idiom/microsoft_translator'
 require 'idiom/base'

@@ -17,34 +17,19 @@ module Idiom #:nodoc:
       "yml"
     end
 
-    def generate
-      yaml = YAML.load_file(source).stringify_keys!
-      english = yaml["en"] || yaml["en-US"]
-
-      non_us_locales.each do |lang|
-        destination = ensure_destination_path_exists(lang)
-
-        code = LOCALES[lang]
-
-        tree = { lang => Marshal.load( Marshal.dump(english) ) }
-        tree.each_pair {|key, leaf| {key => parse_node(leaf, lang)} }
-
-        write_content( destination, tree.ya2yaml(:syck_compatible => true) )
+    def parse(path)
+      YAML.load_file(path) || {}
       end
 
-      after_translation
+    def format(key, value)
+      "#{key}: #{value}"
     end
 
-    private
-
-    def parse_node(node, lang)
-      case node.class.name
-      when "Hash"
-        node.update(node) {|key,leaf| parse_node(leaf, lang)}
-      when "Array"
-        node.map {|term| translate(term, lang).to_s }
+    def key_and_value_from_line(line)
+      if line =~ /^([^\:]+):(.*)/
+        return $1, $2.strip
       else
-        translate(node, lang).to_s
+        return nil, nil
       end
     end
   end
