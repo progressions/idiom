@@ -79,7 +79,7 @@ module Idiom #:nodoc:
         value.sub! /(?:(?:===)|(?:'''))(.*?)(?:(?:===)|(?:'''))/, "__#{@pass_through_vars.count}__"
         @pass_through_vars  << $1
       end
- 
+
       vars = []
       index = 0
       while value =~ /(\{\d+\})/
@@ -203,7 +203,7 @@ module Idiom #:nodoc:
     # Cached array of pass-through content
     #
     attr_accessor :pass_through_vars
-
+    
     def initialize(options={})
       options.stringify_keys!
       
