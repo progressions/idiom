@@ -4,15 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{idiom}
-  s.version = "0.4.5"
+  s.name = "idiom"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Coleman"]
-  s.date = %q{2012-02-17}
-  s.default_executable = %q{idiom}
-  s.description = %q{Takes a set of keys in Yaml format and translates them through Google Translate.}
-  s.email = %q{progressions@gmail.com}
+  s.date = "2012-02-20"
+  s.description = "Takes a set of keys in Yaml format and translates them through Google Translate."
+  s.email = "progressions@gmail.com"
   s.executables = ["idiom"]
   s.extra_rdoc_files = [
     "LICENSE",
@@ -20,7 +19,9 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".rvmrc",
     "Gemfile",
+    "Gemfile.lock",
     "History.txt",
     "LICENSE",
     "README.rdoc",
@@ -39,18 +40,12 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "spec/stubs.rb"
   ]
-  s.homepage = %q{http://github.com/progressions/idiom}
+  s.homepage = "http://github.com/progressions/idiom"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Translate all your application's international keys in Google Translate}
-  s.test_files = [
-    "spec/idiom_spec.rb",
-    "spec/spec_helper.rb",
-    "spec/stubs.rb"
-  ]
+  s.rubygems_version = "1.8.12"
+  s.summary = "Translate all your application's international keys in Google Translate"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
