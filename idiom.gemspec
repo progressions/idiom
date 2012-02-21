@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "idiom"
-  s.version = "0.5.1"
+  s.version = "0.5.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Coleman"]
-  s.date = "2012-02-20"
+  s.date = "2012-02-21"
   s.description = "Takes a set of keys in Yaml format and translates them through Google Translate."
   s.email = "progressions@gmail.com"
   s.executables = ["idiom"]
