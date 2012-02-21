@@ -40,8 +40,9 @@ module Idiom #:nodoc:
     # The key is the I18n representation, and the value is the code Google Translate would expect.
     #
     
-    LOCALES = YAML.load_file("./config/locales.yml")
+    # LOCALES = YAML.load_file("./config/locales.yml")
     CONFIG = YAML.load_file("./config/idiom.yml")
+    LOCALES = CONFIG["locales"]
         
     # locales
     
