@@ -89,10 +89,6 @@ module Idiom #:nodoc:
         index += 1
       end
       
-      if lang !~ /^en/ && value != value.downcase
-        value = value.capitalize
-      end
-      
       value.gsub!("{{", "{{_")
       value.gsub!("}}", "_}}")
 
@@ -115,7 +111,6 @@ module Idiom #:nodoc:
       value.gsub!(/\\$/, "")
 
       value.strip!
-      value.capitalize!
       value = "\"#{value}\"" if value.present?
 
       # Replace substitution vars
