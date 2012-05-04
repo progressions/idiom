@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 module Idiom #:nodoc:
   # Finds English language translation keys which have not been translated 
   # and translates them through Google Translate.
@@ -113,7 +111,7 @@ module Idiom #:nodoc:
       value.gsub!(/\\$/, "")
 
       value.strip!
-      value = "\"#{value}\"" if value.present?
+      # value = "\"#{value}\"" if value.present?
 
       # Replace substitution vars
       while value =~ /\|([^\|]+)\|/ 
