@@ -111,7 +111,7 @@ module Idiom #:nodoc:
       value.gsub!(/\\$/, "")
 
       value.strip!
-      # value = "\"#{value}\"" if value.present?
+      value = "\"#{value}\"" if value.present?
 
       # Replace substitution vars
       while value =~ /\|([^\|]+)\|/ 
