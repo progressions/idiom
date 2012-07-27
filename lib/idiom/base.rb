@@ -96,12 +96,12 @@ module Idiom #:nodoc:
     end
 
     def post_process(value, lang)
-      value.gsub!('"。', '。"')
-      value.gsub!(/^[''"「«]+/, "")
-      value.gsub!(/[''"」»]+$/, "")
+      # value.gsub!('"。', '。"')
+      # value.gsub!(/^[''"「«]+/, "")
+      # value.gsub!(/[''"」»]+$/, "")
       value.gsub!('"', "'")
-      value.gsub!("«", "")
-      value.gsub!("»", "")
+      # value.gsub!("«", "")
+      # value.gsub!("»", "")
       value.gsub!("&lt;", "<")
       value.gsub!("&gt;", ">")
       value.gsub!("{ ", "{")
