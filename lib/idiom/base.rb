@@ -345,6 +345,7 @@ module Idiom #:nodoc:
     end
     
     def translate(value, lang)
+      value = value.gsub(/^'/, "").gsub(/'$/, "")
       return '' if value == ''
       $stdout.puts("Translating #{value} into #{lang}...")
       code = LOCALES[lang]
